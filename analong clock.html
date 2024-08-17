@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital and Analog Clock</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .clock-container {
+      text-align: center;
+    }
+
+    .clock {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      background-color: #fff;
+      border-radius: 50%;
+      border: 2px solid #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock-container">
+    <div class="clock" id="digitalClock"></div>
+    <canvas id="analogClock" width="200" height="200"></canvas>
+  </div>
+
+  <script>
+    function updateDigitalClock() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
+
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      var timeString = hours + ':' + minutes + ':' + seconds;
+
+      document.getElementById('digitalClock').textContent = timeString;
+    }
+
+    function updateAnalogClock() {
+      var canvas = document.getElementById('analogClock');
+      var ctx = canvas.getContext('2d');
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var seconds = now.getSeconds();
+      var milliseconds = now.getMilliseconds();
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw clock face
+      ctx.beginPath();
+      ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2 - 5, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      // Draw hour hand
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((hours % 12 + minutes / 60 + seconds / 3600) * Math.PI / 6);
+      ctx.moveTo(0, 10);
+      ctx.lineTo(0, -canvas.width / 4);
+      ctx.stroke();
+      ctx.restore();
+
+      // Draw minute hand
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((minutes + seconds / 60 + milliseconds / 60000) * Math.PI / 30);
+      ctx.moveTo(0, 10);
+      ctx.lineTo(0, -canvas.width / 3);
+      ctx.stroke();
+      ctx.restore();
+
+      // Draw second hand
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((seconds + milliseconds / 1000) * Math.PI / 30);
+      ctx.moveTo(0, 10);
+      ctx.lineTo(0, -canvas.width / 2.5);
+      ctx.strokeStyle = 'red'; // Color for second hand
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    setInterval(updateDigitalClock, 1000);
+    setInterval(updateAnalogClock, 10);
+  </script>
+</body>
+</html>

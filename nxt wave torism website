@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+
+        <style>
+            .div{
+                text-align: center;
+                
+            }
+
+
+          .h1{
+            background-color: aqua;
+            color: blue;
+            font-size: 36px;
+            font-family: monospace;
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+          }  
+
+          .p{
+            color: grey;
+          }
+
+          .button{
+            background-color: red;
+          }
+
+
+        </style>
+
+    <div>
+
+        <h1 class=h1> tourism </h1>
+        <p class=p> whenever you can go to be trip or door </p>
+        <button class=button> sign </button>
+        
+    </div>
+
+    </body>
